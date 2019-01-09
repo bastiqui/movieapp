@@ -12,7 +12,7 @@ public class YoutubePlayer extends YouTubeFailureRecoveryActivity{
     private YouTubePlayerView playerView;
     private String youtube_url;
 
-    String DEVELOPER_KEY = "AIzaSyCOh9CU1Z6LETz-xtY_iMFhyuzBrdAaL8g";
+    String DEVELOPER_KEY = "";
 
     @Override
     protected void onCreate(Bundle bundle) {
