@@ -2,6 +2,7 @@ package com.example.bastiqui.moviesapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,11 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ToxicBakery.viewpager.transforms.CubeInTransformer;
+import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateDownTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.bastiqui.moviesapp.R;
 
 import com.example.bastiqui.moviesapp.fragments.MovieListFragment;
 import com.example.bastiqui.moviesapp.fragments.TVListFragment;
 import com.example.bastiqui.moviesapp.fragments.TrendingListFragment;
+
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class FragmentsMainActivity extends AppCompatActivity {
 
@@ -34,6 +41,7 @@ public class FragmentsMainActivity extends AppCompatActivity {
 
         ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setPageTransformer(true, new CubeOutTransformer());
 
         TabLayout tabLayout = findViewById(R.id.tabs);
 

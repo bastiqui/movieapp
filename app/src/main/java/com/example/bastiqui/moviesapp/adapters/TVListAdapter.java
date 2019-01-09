@@ -19,8 +19,7 @@ import com.example.bastiqui.moviesapp.Information;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
-import com.example.bastiqui.moviesapp.database.Recent_History;
-import com.example.bastiqui.moviesapp.database.StoreImage;
+import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.TV;
 
 import java.util.ArrayList;
@@ -42,19 +41,12 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.TVViewHold
             intent.putExtra("id", tvList.get(tvViewHolder.getAdapterPosition()).id);
             intent.putExtra("type", "tv");
 
-            dbHelper.addRecent(new Recent_History(tvList.get(tvViewHolder.getAdapterPosition()).id,
+            dbHelper.addRecent(new RecentHistory(tvList.get(tvViewHolder.getAdapterPosition()).id,
                     tvList.get(tvViewHolder.getAdapterPosition()).name,
+                    "https://image.tmdb.org/t/p/w500/" + tvList.get(tvViewHolder.getAdapterPosition()).getPoster_path(),
                     "tv",
                     tvList.get(tvViewHolder.getAdapterPosition()).vote_average,
                     Information.getDate()));
-
-            GlideApp.with(tvViewHolder.itemView).asBitmap().load("https://image.tmdb.org/t/p/w500/" + tvList.get(tvViewHolder.getAdapterPosition()).poster_path)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            dbHelper.addImage(new StoreImage(tvList.get(tvViewHolder.getAdapterPosition()).getId()), resource);
-                        }
-                    });
 
             tvViewHolder.itemView.getContext().startActivity(intent);
         });

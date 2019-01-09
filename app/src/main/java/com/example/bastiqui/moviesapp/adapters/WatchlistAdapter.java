@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
-import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +41,11 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.Watc
     public void onBindViewHolder(@NonNull WatchlistAdapter.WatchlistViewHolder holder, int position) {
         WatchlistModel watchList = watchLists.get(position);
 
+        GlideApp.with(holder.itemView).load(watchList.getImage()).into(holder.imageView);
+
         holder.name.setText(watchList.getName());
         holder.type.setText(watchList.getType());
         holder.vote.setText(String.format("%s/10", watchList.getVote_average()));
-
-        final DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
-        holder.imageView.setImageBitmap(dbHelper.getImage(watchList.getId()));
     }
 
     @Override

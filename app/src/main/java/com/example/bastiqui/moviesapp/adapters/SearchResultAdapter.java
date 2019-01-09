@@ -19,8 +19,7 @@ import com.example.bastiqui.moviesapp.Information;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
-import com.example.bastiqui.moviesapp.database.Recent_History;
-import com.example.bastiqui.moviesapp.database.StoreImage;
+import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.Search;
 
 import java.util.ArrayList;
@@ -43,26 +42,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             intent.putExtra("type", searchList.get(searchViewHolder.getAdapterPosition()).media_type);
 
             if (searchList.get(searchViewHolder.getAdapterPosition()).media_type.equals("movie")) {
-                dbHelper.addRecent(new Recent_History(searchList.get(searchViewHolder.getAdapterPosition()).id,
+                dbHelper.addRecent(new RecentHistory(searchList.get(searchViewHolder.getAdapterPosition()).id,
                         searchList.get(searchViewHolder.getAdapterPosition()).title,
+                        "https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
                         searchList.get(searchViewHolder.getAdapterPosition()).media_type,
                         searchList.get(searchViewHolder.getAdapterPosition()).getVote_average(),
                         Information.getDate()));
             } else {
-                dbHelper.addRecent(new Recent_History(searchList.get(searchViewHolder.getAdapterPosition()).id,
+                dbHelper.addRecent(new RecentHistory(searchList.get(searchViewHolder.getAdapterPosition()).id,
                         searchList.get(searchViewHolder.getAdapterPosition()).name,
+                        "https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
                         searchList.get(searchViewHolder.getAdapterPosition()).media_type,
                         searchList.get(searchViewHolder.getAdapterPosition()).getVote_average(),
                         Information.getDate()));
             }
-
-            GlideApp.with(searchViewHolder.itemView).asBitmap().load("https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            dbHelper.addImage(new StoreImage(searchList.get(searchViewHolder.getAdapterPosition()).getId()), resource);
-                        }
-                    });
 
             searchViewHolder.itemView.getContext().startActivity(intent);
         });

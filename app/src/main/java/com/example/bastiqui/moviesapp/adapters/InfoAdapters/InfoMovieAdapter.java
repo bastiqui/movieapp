@@ -1,6 +1,8 @@
 package com.example.bastiqui.moviesapp.adapters.InfoAdapters;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,8 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 import java.util.ArrayList;
 import java.util.List;
 
+import babushkatext.BabushkaText;
+
 public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.InfoMovieViewHolder> {
     public MovieDetails movieDetails = new MovieDetails();
     public List<MovieDetails.Genre> genres = new ArrayList<>();
@@ -35,12 +40,6 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
     public InfoMovieAdapter.InfoMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_info, parent, false);
         final InfoMovieViewHolder infoMovieViewHolder = new InfoMovieViewHolder(view);
-
-        infoMovieViewHolder.description.setOnClickListener(v -> {
-            Intent sendDescription = new Intent(infoMovieViewHolder.itemView.getContext(), showDescription.class);
-            sendDescription.putExtra("description", movieDetails.getOverview());
-            infoMovieViewHolder.itemView.getContext().startActivity(sendDescription);
-        });
 
         infoMovieViewHolder.youTubeThumbnailView.setOnClickListener(v -> {
             if (movieDetails.getVideos().results.length > 0) {
@@ -60,6 +59,17 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
         infoMovieViewHolder.title.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(movieDetails.getHomepage()));
             infoMovieViewHolder.itemView.getContext().startActivity(Intent.createChooser(browserIntent, "Open the page in:"));
+        });
+
+        infoMovieViewHolder.readMore.setOnClickListener(v -> {
+            final Dialog dialog = new Dialog(infoMovieViewHolder.itemView.getContext());
+            dialog.setContentView(R.layout.activity_show_description);
+            TextView textView = dialog.findViewById(R.id.showDescription);
+            textView.setText(movieDetails.getOverview());
+
+            Button closeDialog = dialog.findViewById(R.id.closeDialog);
+            closeDialog.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
         });
 
         //return new InfoMovieViewHolder;
@@ -89,7 +99,26 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
 
         holder.description.setText(movieDetails.getOverview());
 
-        holder.rating.setText(movieDetails.getVoteAverage());
+        if (genres.size() > 0) {
+            double value = Double.parseDouble(movieDetails.getVoteAverage());
+            String vote = " " + movieDetails.getVoteAverage() + " ";
+
+            if (value > 7.0) {
+                holder.rating.addPiece(new BabushkaText.Piece.Builder(vote)
+                        .textColor(Color.parseColor("#ffffff")).backgroundColor(Color.parseColor("#53c653"))
+                        .build());
+            } else if (value < 5.0) {
+                holder.rating.addPiece(new BabushkaText.Piece.Builder(vote)
+                        .textColor(Color.parseColor("#ffffff")).backgroundColor(Color.parseColor("#ff4d4d"))
+                        .build());
+            } else {
+                holder.rating.addPiece(new BabushkaText.Piece.Builder(vote)
+                        .textColor(Color.parseColor("#ffffff")).backgroundColor(Color.parseColor("#ffcc66"))
+                        .build());
+            }
+        }
+
+        holder.rating.display();
 
         holder.date.setText(movieDetails.getReleaseDate());
 
@@ -117,7 +146,7 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
 
         final DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
         holder.addWatchlist.setOnClickListener(v -> {
-            dbHelper.addWatchlist(new WatchlistModel(movieDetails.getId(), movieDetails.getTitle(), "movie", movieDetails.getVoteAverage(), Information.getDate()));
+            dbHelper.addWatchlist(new WatchlistModel(movieDetails.getId(), movieDetails.getTitle(), "https://image.tmdb.org/t/p/w500/" + movieDetails.getPosterPath(),"movie", movieDetails.getVoteAverage(), Information.getDate()));
             Toast.makeText(holder.itemView.getContext(), "Movie added to watchlist", Toast.LENGTH_SHORT).show();
         });
     }
@@ -133,11 +162,12 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
         FloatingActionButton addWatchlist;
         ImageView poster_path;
         ImageView back_poster;
-        TextView rating;
+        BabushkaText rating;
         TextView date;
         TextView type;
         TextView genres;
         TextView description;
+        TextView readMore;
 
         public InfoMovieViewHolder(View itemView) {
             super(itemView);
@@ -151,6 +181,7 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
             type = itemView.findViewById(R.id.display_type);
             genres = itemView.findViewById(R.id.display_genres);
             description = itemView.findViewById(R.id.display_description);
+            readMore = itemView.findViewById(R.id.readMore);
         }
     }
 }

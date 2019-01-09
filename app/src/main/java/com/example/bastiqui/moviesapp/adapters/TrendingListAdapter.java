@@ -19,8 +19,7 @@ import com.example.bastiqui.moviesapp.Information;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
-import com.example.bastiqui.moviesapp.database.Recent_History;
-import com.example.bastiqui.moviesapp.database.StoreImage;
+import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.Trending;
 
 import java.text.MessageFormat;
@@ -40,22 +39,27 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
             final DatabaseHelper dbHelper = new DatabaseHelper(trendingViewHolder.itemView.getContext());
             Intent intent = new Intent(trendingViewHolder.itemView.getContext(), DisplayInfoActivity.class);
 
-            intent.putExtra("id", trendingList.get(trendingViewHolder.getAdapterPosition()).id);
-            intent.putExtra("type", "movie");
+            if (trendingList.get(trendingViewHolder.getAdapterPosition()).title == null) {
+                intent.putExtra("id", trendingList.get(trendingViewHolder.getAdapterPosition()).id);
+                intent.putExtra("type", "tv");
 
-            dbHelper.addRecent(new Recent_History(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
-                    trendingList.get(trendingViewHolder.getAdapterPosition()).title,
-                    "movie",
-                    trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
-                    Information.getDate()));
+                dbHelper.addRecent(new RecentHistory(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
+                        trendingList.get(trendingViewHolder.getAdapterPosition()).name,
+                        "https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
+                        "tv",
+                        trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
+                        Information.getDate()));
+            } else {
+                intent.putExtra("id", trendingList.get(trendingViewHolder.getAdapterPosition()).id);
+                intent.putExtra("type", "movie");
 
-            GlideApp.with(trendingViewHolder.itemView).asBitmap().load("https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            dbHelper.addImage(new StoreImage(trendingList.get(trendingViewHolder.getAdapterPosition()).getId()), resource);
-                        }
-                    });
+                dbHelper.addRecent(new RecentHistory(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
+                        trendingList.get(trendingViewHolder.getAdapterPosition()).title,
+                        "https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
+                        "movie",
+                        trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
+                        Information.getDate()));
+            }
 
             trendingViewHolder.itemView.getContext().startActivity(intent);
         });
@@ -67,7 +71,13 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
     public void onBindViewHolder(@NonNull TrendingViewHolder holder, int position) {
         Trending trending = trendingList.get(position);
 
-        holder.title.setText(MessageFormat.format("#{0} {1}", position + 1, trending.title));
+        if (trending.title == null) {
+            holder.title.setText(MessageFormat.format("#{0} {1}", position + 1, trending.name));
+        } else {
+            holder.title.setText(MessageFormat.format("#{0} {1}", position + 1, trending.title));
+        }
+
+
 
         GlideApp.with(holder.itemView.getContext()).load("https://image.tmdb.org/t/p/w500/" + trending.poster_path).into(holder.poster);
     }

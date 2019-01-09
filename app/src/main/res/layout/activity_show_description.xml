@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".activities.showInfo.showDescription">
 
     <TextView
         android:id="@+id/showDescription"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/closeDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/borderlessButtonStyle"
+        android:text="@string/close"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

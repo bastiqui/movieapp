@@ -44,7 +44,7 @@
         android:id="@+id/addWatchlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="187dp"
+        android:layout_marginTop="178dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/scrollInfo"
@@ -81,17 +81,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/display_type" />
 
-    <TextView
+    <babushkatext.BabushkaText
         android:id="@+id/averageRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:background="@color/colorPrimary"
-        android:drawableStart="@drawable/ic_star_black_24dp"
-        android:paddingEnd="5dp"
-        android:textColor="#fff"
-        android:textSize="15sp"
+        android:layout_marginEnd="16dp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/display_title" />
@@ -118,5 +114,16 @@
         app:layout_constraintTop_toBottomOf="@+id/display_genres"
         android:ellipsize="end"
         android:maxLines="2" />
+
+    <TextView
+        android:id="@+id/readMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:text="@string/read_more"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/display_description" />
 
 </android.support.constraint.ConstraintLayout>

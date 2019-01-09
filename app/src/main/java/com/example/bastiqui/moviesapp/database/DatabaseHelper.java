@@ -7,10 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +20,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //Create table
         db.execSQL(DatabaseOptions.CREATE_RECENT_TABLE_);
-        db.execSQL(DatabaseOptions.CREATE_IMAGE_TABLE_);
         db.execSQL(DatabaseOptions.CREATE_WATCHLIST_TABLE_);
     }
 
@@ -32,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseOptions.RECENT_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + DatabaseOptions.IMAGE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseOptions.WATCHLIST_TABLE);
         // Create tables again
         onCreate(db);
@@ -53,11 +47,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 while (!cursor.isAfterLast()) {
                     String id = cursor.getString(cursor.getColumnIndex(DatabaseOptions.ID));
                     String name = cursor.getString(cursor.getColumnIndex(DatabaseOptions.NAME));
+                    String image = cursor.getString(cursor.getColumnIndex(DatabaseOptions.IMAGE));
                     String type = cursor.getString(cursor.getColumnIndex(DatabaseOptions.TYPE));
                     String vote = cursor.getString(cursor.getColumnIndex(DatabaseOptions.VOTE_AVERAGE));
                     String date = cursor.getString(cursor.getColumnIndex(DatabaseOptions.DATE));
 
-                    watchlistModel = new WatchlistModel(id, name, type, vote, date);
+                    watchlistModel = new WatchlistModel(id, name, image, type, vote, date);
                     watchlistModels.add(watchlistModel);
                     cursor.moveToNext();
                 }
@@ -70,27 +65,67 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
 
+    public boolean queryCheckWatchlist (WatchlistModel watchListModel) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(DatabaseOptions.WATCHLIST_TABLE,
+                new String[]{DatabaseOptions.ID},
+                DatabaseOptions.ID + "=?",
+                new String[]{watchListModel.getId()}, null, null, null, "1");
+        if (cursor != null)
+            cursor.moveToFirst();
+        if (cursor != null && cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public void addWatchlist (WatchlistModel watchlistModel) {
         SQLiteDatabase db = this.getWritableDatabase();
+        Boolean check = queryCheckWatchlist(watchlistModel);
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseOptions.ID, watchlistModel.getId());
-        values.put(DatabaseOptions.NAME, watchlistModel.getName());
-        values.put(DatabaseOptions.TYPE, watchlistModel.getType());
-        values.put(DatabaseOptions.VOTE_AVERAGE, watchlistModel.getVote_average());
-        values.put(DatabaseOptions.DATE, watchlistModel.getDate());
 
-        // Inserting Row
-        db.insert(DatabaseOptions.WATCHLIST_TABLE, null, values);
+        if (check) {
+            values.put(DatabaseOptions.DATE, watchlistModel.getDate());
+
+            db.update(DatabaseOptions.WATCHLIST_TABLE, values, "id=" + watchlistModel.getId(), null);
+        } else {
+            values.put(DatabaseOptions.ID, watchlistModel.getId());
+            values.put(DatabaseOptions.NAME, watchlistModel.getName());
+            values.put(DatabaseOptions.TYPE, watchlistModel.getType());
+            values.put(DatabaseOptions.IMAGE, watchlistModel.getImage());
+            values.put(DatabaseOptions.VOTE_AVERAGE, watchlistModel.getVote_average());
+            values.put(DatabaseOptions.DATE, watchlistModel.getDate());
+
+            // Inserting Row
+            db.insert(DatabaseOptions.WATCHLIST_TABLE, null, values);
+        }
+
         db.close(); // Closing database connection
     }
 
-    public LiveData<List<Recent_History>> getAllRecent() {
+    public boolean queryCheckRecent(RecentHistory recentHistory) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<Recent_History> recentHistoryList = new ArrayList<>();
-        Recent_History recentHistory;
 
-        final MutableLiveData<List<Recent_History>> lista = new MutableLiveData<>();
+        Cursor cursor = db.query(DatabaseOptions.RECENT_TABLE,
+                new String[]{DatabaseOptions.ID},
+                DatabaseOptions.ID + "=?",
+                new String[]{recentHistory.getId()}, null, null, null, "1");
+        if (cursor != null)
+            cursor.moveToFirst();
+        if (cursor != null && cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public LiveData<List<RecentHistory>> getAllRecent() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<RecentHistory> recentHistoryList = new ArrayList<>();
+        RecentHistory recentHistory;
+
+        final MutableLiveData<List<RecentHistory>> lista = new MutableLiveData<>();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseOptions.RECENT_TABLE + " ORDER BY DATE DESC", null);
 
@@ -101,11 +136,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 while (!cursor.isAfterLast()) {
                     String id = cursor.getString(cursor.getColumnIndex(DatabaseOptions.ID));
                     String name = cursor.getString(cursor.getColumnIndex(DatabaseOptions.NAME));
+                    String image = cursor.getString(cursor.getColumnIndex(DatabaseOptions.IMAGE));
                     String type = cursor.getString(cursor.getColumnIndex(DatabaseOptions.TYPE));
                     String vote = cursor.getString(cursor.getColumnIndex(DatabaseOptions.VOTE_AVERAGE));
                     String date = cursor.getString(cursor.getColumnIndex(DatabaseOptions.DATE));
 
-                    recentHistory = new Recent_History(id, name, type, vote, date);
+                    recentHistory = new RecentHistory(id, name, image, type, vote, date);
                     recentHistoryList.add(recentHistory);
                     cursor.moveToNext();
                 }
@@ -118,56 +154,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    public void addRecent (Recent_History recent_history) {
+    public void addRecent (RecentHistory recentHistory) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(DatabaseOptions.ID, recent_history.getId());
-        values.put(DatabaseOptions.NAME, recent_history.getName());
-        values.put(DatabaseOptions.TYPE, recent_history.getType());
-        values.put(DatabaseOptions.VOTE_AVERAGE, recent_history.getVote_average());
-        values.put(DatabaseOptions.DATE, recent_history.getDate());
 
-        // Inserting Row
-        db.insert(DatabaseOptions.RECENT_TABLE, null, values);
-        db.close(); // Closing database connection
-    }
+        boolean check = queryCheckRecent(recentHistory);
 
-    public void addImage (StoreImage storeImage, Bitmap img) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        if (check) {
+            values.put(DatabaseOptions.DATE, recentHistory.getDate());
 
-        byte[] data = getBitmapAsByteArray(img);
+            db.update(DatabaseOptions.RECENT_TABLE, values, "id=" + recentHistory.getId(), null);
+        } else {
+            values.put(DatabaseOptions.ID, recentHistory.getId());
+            values.put(DatabaseOptions.NAME, recentHistory.getName());
+            values.put(DatabaseOptions.IMAGE, recentHistory.getImage());
+            values.put(DatabaseOptions.TYPE, recentHistory.getType());
+            values.put(DatabaseOptions.VOTE_AVERAGE, recentHistory.getVote_average());
+            values.put(DatabaseOptions.DATE, recentHistory.getDate());
 
-        ContentValues values = new ContentValues();
-        values.put(DatabaseOptions.ID, storeImage.getId());
-        values.put(DatabaseOptions.IMAGE, data);
-
-        // Inserting Row
-        db.insert(DatabaseOptions.IMAGE_TABLE, null, values);
-        db.close(); // Closing database connection
-    }
-
-    private static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
-    }
-
-    public Bitmap getImage (String id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String query = "SELECT image FROM " + DatabaseOptions.IMAGE_TABLE + " WHERE ID=" + id;
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            byte[] bitmap = cursor.getBlob(cursor.getColumnIndex("image"));
-            cursor.close();
-            return BitmapFactory.decodeByteArray(bitmap, 0, bitmap.length);
-        }
-        if (cursor != null && !cursor.isClosed()) {
-            cursor.close();
+            // Inserting Row
+            db.insert(DatabaseOptions.RECENT_TABLE, null, values);
         }
 
-        return null;
+        db.close(); // Closing database connection
     }
 }

@@ -6,7 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
-import com.example.bastiqui.moviesapp.database.Recent_History;
+import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
 import com.example.bastiqui.moviesapp.dbRepository.InfoRepositores.InfoMoviedbRepository;
 import com.example.bastiqui.moviesapp.dbRepository.InfoRepositores.InfoTVdbRepository;
@@ -34,7 +34,7 @@ public class InfoViewModel extends AndroidViewModel {
         return infoTVdbRepository.getTVInfo(id);
     }
 
-    public LiveData<List<Recent_History>> getAllRecent () {
+    public LiveData<List<RecentHistory>> getAllRecent () {
         return dbHelper.getAllRecent();
     }
 

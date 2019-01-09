@@ -10,16 +10,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
-import com.example.bastiqui.moviesapp.database.DatabaseHelper;
-import com.example.bastiqui.moviesapp.database.Recent_History;
+import com.example.bastiqui.moviesapp.database.RecentHistory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecentViewHolder> {
-    public List<Recent_History> recentHistoryList = new ArrayList<>();
+    public List<RecentHistory> recentHistoryList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -39,14 +39,13 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecentView
 
     @Override
     public void onBindViewHolder(@NonNull RecentAdapter.RecentViewHolder holder, int position) {
-        Recent_History recentHistory = recentHistoryList.get(position);
+        RecentHistory recentHistory = recentHistoryList.get(position);
+
+        GlideApp.with(holder.itemView).load(recentHistory.getImage()).into(holder.imageView);
 
         holder.name.setText(recentHistory.getName());
         holder.type.setText(recentHistory.getType());
         holder.vote.setText(String.format("%s/10", recentHistory.getVote_average()));
-
-        final DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
-        holder.imageView.setImageBitmap(dbHelper.getImage(recentHistory.getId()));
     }
 
     @Override

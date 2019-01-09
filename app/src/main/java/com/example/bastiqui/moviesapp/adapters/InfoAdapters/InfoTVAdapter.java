@@ -1,6 +1,8 @@
 package com.example.bastiqui.moviesapp.adapters.InfoAdapters;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,8 @@ import com.example.bastiqui.moviesapp.model.GetDetails.movies.tv.TVDetails;
 import java.util.ArrayList;
 import java.util.List;
 
+import babushkatext.BabushkaText;
+
 public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVViewHolder> {
     public TVDetails tvDetails = new TVDetails();
     public List<TVDetails.Genre> genres = new ArrayList<>();
@@ -36,12 +41,6 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
     public InfoTVAdapter.InfoTVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_info_tv, parent, false);
         final InfoTVViewHolder infoTVViewHolder = new InfoTVViewHolder(view);
-
-        infoTVViewHolder.description.setOnClickListener(v -> {
-            Intent sendDescription = new Intent(infoTVViewHolder.itemView.getContext(), showDescription.class);
-            sendDescription.putExtra("description", tvDetails.getOverview());
-            infoTVViewHolder.itemView.getContext().startActivity(sendDescription);
-        });
 
         infoTVViewHolder.title.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tvDetails.getHomepage()));
@@ -65,6 +64,17 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
             sendSeasons.putStringArrayListExtra("numEpisodes", numEpisodes);
 
             infoTVViewHolder.itemView.getContext().startActivity(sendSeasons);
+        });
+
+        infoTVViewHolder.readMore.setOnClickListener(v -> {
+            final Dialog dialog = new Dialog(infoTVViewHolder.itemView.getContext());
+            dialog.setContentView(R.layout.activity_show_description);
+            TextView textView = dialog.findViewById(R.id.showDescription);
+            textView.setText(tvDetails.getOverview());
+
+            Button closeDialog = dialog.findViewById(R.id.closeDialog);
+            closeDialog.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
         });
 
         return infoTVViewHolder;
@@ -93,7 +103,26 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
 
         holder.description.setText(tvDetails.getOverview());
 
-        holder.rating.setText(tvDetails.getVoteAverage());
+        if (genres.size() > 0) {
+            double value = Double.parseDouble(tvDetails.getVoteAverage());
+            String vote = " " + tvDetails.getVoteAverage() + " ";
+
+            if (value > 7.0) {
+                holder.rating.addPiece(new BabushkaText.Piece.Builder(vote)
+                        .textColor(Color.parseColor("#ffffff")).backgroundColor(Color.parseColor("#53c653"))
+                        .build());
+            } else if (value < 5.0) {
+                holder.rating.addPiece(new BabushkaText.Piece.Builder(vote)
+                        .textColor(Color.parseColor("#ffffff")).backgroundColor(Color.parseColor("#ff4d4d"))
+                        .build());
+            } else {
+                holder.rating.addPiece(new BabushkaText.Piece.Builder(vote)
+                        .textColor(Color.parseColor("#ffffff")).backgroundColor(Color.parseColor("#ffcc66"))
+                        .build());
+            }
+        }
+
+        holder.rating.display();
 
         GlideApp.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getBackdropPath())
@@ -115,7 +144,7 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
 
         final DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
         holder.addWatchlist.setOnClickListener(v -> {
-            dbHelper.addWatchlist(new WatchlistModel(tvDetails.getId(), tvDetails.getName(), "tv", tvDetails.getVoteAverage(), Information.getDate()));
+            dbHelper.addWatchlist(new WatchlistModel(tvDetails.getId(), tvDetails.getName(), "https://image.tmdb.org/t/p/w500/" + tvDetails.getPosterPath(),"tv", tvDetails.getVoteAverage(), Information.getDate()));
             Toast.makeText(holder.itemView.getContext(), "TV added to watchlist", Toast.LENGTH_SHORT).show();
         });
     }
@@ -130,11 +159,12 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
         ImageView poster_path;
         ImageView back_poster;
         FloatingActionButton addWatchlist;
-        TextView rating;
+        BabushkaText rating;
         TextView date;
         TextView type;
         TextView genres;
         TextView description;
+        TextView readMore;
         TextView seasons;
 
         public InfoTVViewHolder(View itemView) {
@@ -148,6 +178,7 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
             type = itemView.findViewById(R.id.display_type);
             genres = itemView.findViewById(R.id.display_genres);
             description = itemView.findViewById(R.id.display_description);
+            readMore = itemView.findViewById(R.id.readMore);
             seasons = itemView.findViewById(R.id.display_seasons);
         }
     }

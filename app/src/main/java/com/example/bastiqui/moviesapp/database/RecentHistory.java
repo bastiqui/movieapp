@@ -1,17 +1,19 @@
 package com.example.bastiqui.moviesapp.database;
 
-public class Recent_History {
+public class RecentHistory {
     private String id;
     private String name;
+    private String image;
     private String type;
     private String vote_average;
     private String date;
 
-    public Recent_History() {}
+    public RecentHistory() {}
 
-    public Recent_History(String id, String name, String type, String vote_average, String date) {
+    public RecentHistory(String id, String name, String image, String type, String vote_average, String date) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.type = type;
         this.vote_average = vote_average;
         this.date = date;
@@ -31,6 +33,14 @@ public class Recent_History {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getType() {
@@ -59,12 +69,13 @@ public class Recent_History {
 
     @Override
     public String toString() {
-        return "Recent_History{" +
+        return "RecentHistory{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
                 ", type='" + type + '\'' +
                 ", vote_average='" + vote_average + '\'' +
-                ", date=" + date +
+                ", date='" + date + '\'' +
                 '}';
     }
 }
