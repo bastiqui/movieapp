@@ -1,7 +1,10 @@
 package com.example.bastiqui.moviesapp.adapters;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
+import com.example.bastiqui.moviesapp.activities.WatchList;
+import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 
@@ -32,6 +37,31 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.Watc
             getInfo.putExtra("id", watchLists.get(watchlistViewHolder.getAdapterPosition()).getId());
             getInfo.putExtra("type", watchLists.get(watchlistViewHolder.getAdapterPosition()).getType());
             watchlistViewHolder.imageView.getContext().startActivity(getInfo);
+        });
+
+        watchlistViewHolder.linearLayout.setOnLongClickListener(v -> {
+            String[] options = {"Delete from watchlist"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(watchlistViewHolder.itemView.getContext());
+            builder.setTitle("Choose an action: ");
+            builder.setItems(options, (dialog, which) -> {
+                switch (which) {
+                    case 0:
+                        final DatabaseHelper db = new DatabaseHelper(watchlistViewHolder.itemView.getContext());
+                        db.removeWatchlist(watchLists.get(watchlistViewHolder.getAdapterPosition()).getId());
+
+                        Intent refresh = new Intent(watchlistViewHolder.itemView.getContext(), WatchList.class);
+                        watchlistViewHolder.itemView.getContext().startActivity(refresh);
+
+                        ((Activity)watchlistViewHolder.itemView.getContext()).finish();
+                        break;
+                    default:
+                        break;
+                }
+            });
+            builder.show();
+
+            return false;
         });
 
         return watchlistViewHolder;

@@ -105,6 +105,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    public void removeWatchlist (String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + DatabaseOptions.WATCHLIST_TABLE + " WHERE id=\'" + id + "\'";
+
+        db.execSQL(query);
+    }
+
     public boolean queryCheckRecent(RecentHistory recentHistory) {
         SQLiteDatabase db = this.getReadableDatabase();
 
