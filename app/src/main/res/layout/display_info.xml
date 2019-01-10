@@ -92,7 +92,7 @@
 
     <TextView
         android:id="@+id/display_genres"
-        android:layout_width="wrap_content"
+        android:layout_width="342dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"

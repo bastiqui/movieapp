@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="131dp"
-    android:layout_height="190dp">
+    android:layout_height="190dp"
+    android:orientation="vertical"
+    android:id="@+id/item_id">
 
     <ImageView
         android:id="@+id/itemImage"
         android:layout_width="131dp"
         android:layout_height="170dp"
-        android:elevation="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:contentDescription="@string/posterpath_image" />
 
     <com.example.bastiqui.moviesapp.ScrollTextView
         android:id="@+id/itemTitle"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:elevation="3dp"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:state_selected = "true">
+        android:state_selected="true">
         <requestFocus />
     </com.example.bastiqui.moviesapp.ScrollTextView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
