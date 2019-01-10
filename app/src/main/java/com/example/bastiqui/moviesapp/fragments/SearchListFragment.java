@@ -1,6 +1,5 @@
 package com.example.bastiqui.moviesapp.fragments;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,9 +15,8 @@ import com.example.bastiqui.moviesapp.GridSpacingItemDecoration;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.ViewModels.SearchListViewModel;
 import com.example.bastiqui.moviesapp.adapters.SearchResultAdapter;
-import com.example.bastiqui.moviesapp.model.Search;
 
-import java.util.List;
+import java.util.Objects;
 
 public class SearchListFragment extends Fragment {
 
@@ -44,14 +42,11 @@ public class SearchListFragment extends Fragment {
 
         SearchListViewModel mSearchViewModel = ViewModelProviders.of(this).get(SearchListViewModel.class);
 
-        String query = getActivity().getIntent().getExtras().getString("query");
+        String query = Objects.requireNonNull(Objects.requireNonNull(getActivity()).getIntent().getExtras()).getString("query");
 
-        mSearchViewModel.getSearch(query).observe(this, new Observer<List<Search>>() {
-            @Override
-            public void onChanged(@Nullable List<Search> searches) {
-                mSearchResultAdapter.searchList = searches;
-                mSearchResultAdapter.notifyDataSetChanged();
-            }
+        mSearchViewModel.getSearch(query).observe(this, searches -> {
+            mSearchResultAdapter.searchList = searches;
+            mSearchResultAdapter.notifyDataSetChanged();
         });
         return view;
     }

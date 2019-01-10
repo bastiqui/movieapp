@@ -25,6 +25,7 @@ import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
 import com.example.bastiqui.moviesapp.model.GetDetails.movies.tv.Season;
 import com.example.bastiqui.moviesapp.model.GetDetails.movies.tv.TVDetails;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,9 +94,11 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
             if (genres.size() == 1) {
                 allGenres += genres.get(0).name;
             } else {
+                StringBuilder allGenresBuilder = new StringBuilder();
                 for (int i = 0; i < (genres.size()-1); i++) {
-                    allGenres += genres.get(i).name + "/";
+                    allGenresBuilder.append(genres.get(i).name).append("/");
                 }
+                allGenres = allGenresBuilder.toString();
                 allGenres +=  genres.get(genres.size()-1).name;
             }
         }
@@ -124,12 +127,15 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
 
         holder.rating.display();
 
-        GlideApp.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getBackdropPath())
+        Picasso.with(holder.itemView.getContext())
+                .load("https://image.tmdb.org/t/p/original/" + tvDetails.getBackdropPath())
+                .fit()
                 .into(holder.back_poster);
 
-        GlideApp.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getPosterPath())
+        Picasso.with(holder.itemView.getContext())
+                .load("https://image.tmdb.org/t/p/original/" + tvDetails.getPosterPath())
+                .fit()
+                .centerInside()
                 .into(holder.poster_path);
 
         holder.back_poster.setOnClickListener(v -> {
@@ -144,7 +150,7 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
 
         final DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
         holder.addWatchlist.setOnClickListener(v -> {
-            dbHelper.addWatchlist(new WatchlistModel(tvDetails.getId(), tvDetails.getName(), "https://image.tmdb.org/t/p/w500/" + tvDetails.getPosterPath(),"tv", tvDetails.getVoteAverage(), Information.getDate()));
+            dbHelper.addWatchlist(new WatchlistModel(tvDetails.getId(), tvDetails.getName(), "https://image.tmdb.org/t/p/original/" + tvDetails.getPosterPath(),"tv", tvDetails.getVoteAverage(), Information.getDate()));
             Toast.makeText(holder.itemView.getContext(), "TV added to watchlist", Toast.LENGTH_SHORT).show();
         });
     }

@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/display_info">
@@ -20,21 +19,20 @@
 
             <com.google.android.youtube.player.YouTubeThumbnailView
                 android:id="@+id/youtubePreview"
-                android:layout_width="384dp"
-                android:layout_height="208dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="400dp"
+                android:layout_height="208dp" />
 
             <ImageView
                 android:id="@+id/infoBackPoster"
-                android:layout_width="384dp"
-                android:layout_height="208dp" />
+                android:layout_width="400dp"
+                android:layout_height="208dp"
+                android:contentDescription="@string/backdrop_image" />
 
             <ImageView
                 android:id="@+id/infoPoster"
-                android:layout_width="384dp"
-                android:layout_height="208dp" />
+                android:layout_width="400dp"
+                android:layout_height="208dp"
+                android:contentDescription="@string/posterpath_image" />
 
         </LinearLayout>
 

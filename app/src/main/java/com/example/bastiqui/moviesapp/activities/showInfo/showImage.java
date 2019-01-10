@@ -1,8 +1,8 @@
 package com.example.bastiqui.moviesapp.activities.showInfo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
@@ -23,7 +23,7 @@ public class showImage extends AppCompatActivity {
         com.jsibbold.zoomage.ZoomageView imageView = findViewById(R.id.showImage);
 
         GlideApp.with(this)
-                .load("https://image.tmdb.org/t/p/w500/" + uri)
+                .load("https://image.tmdb.org/t/p/original/" + uri)
                 .into(imageView);
     }
 }

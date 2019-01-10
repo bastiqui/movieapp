@@ -14,6 +14,7 @@ import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,10 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecentView
     public void onBindViewHolder(@NonNull RecentAdapter.RecentViewHolder holder, int position) {
         RecentHistory recentHistory = recentHistoryList.get(position);
 
-        GlideApp.with(holder.itemView).load(recentHistory.getImage()).into(holder.imageView);
+        Picasso.with(holder.itemView.getContext())
+                .load(recentHistory.getImage())
+                .fit()
+                .into(holder.imageView);
 
         holder.name.setText(recentHistory.getName());
         holder.type.setText(recentHistory.getType());

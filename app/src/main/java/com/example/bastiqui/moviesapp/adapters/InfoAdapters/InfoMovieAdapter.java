@@ -15,16 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.Information;
 import com.example.bastiqui.moviesapp.R;
-import com.example.bastiqui.moviesapp.activities.showInfo.showDescription;
 import com.example.bastiqui.moviesapp.activities.showInfo.showImage;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
 import com.example.bastiqui.moviesapp.model.GetDetails.movies.movies.MovieDetails;
 import com.example.bastiqui.moviesapp.youtube.YoutubePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +88,11 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
             if (genres.size() == 1) {
                 allGenres += genres.get(0).name;
             } else {
+                StringBuilder allGenresBuilder = new StringBuilder();
                 for (int i = 0; i < (genres.size()-1); i++) {
-                    allGenres += genres.get(i).name + "/";
+                    allGenresBuilder.append(genres.get(i).name).append("/");
                 }
+                allGenres = allGenresBuilder.toString();
                 allGenres +=  genres.get(genres.size()-1).name;
             }
         }
@@ -122,16 +123,21 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
 
         holder.date.setText(movieDetails.getReleaseDate());
 
-        GlideApp.with(holder.itemView.getContext())
+        Picasso.with(holder.itemView.getContext())
                 .load(R.drawable.youtube_logo)
+                .fit()
+                .centerInside()
                 .into(holder.youTubeThumbnailView);
 
-        GlideApp.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + movieDetails.getBackdropPath())
+        Picasso.with(holder.itemView.getContext())
+                .load("https://image.tmdb.org/t/p/original/" + movieDetails.getBackdropPath())
+                .fit()
                 .into(holder.back_poster);
 
-        GlideApp.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + movieDetails.getPosterPath())
+        Picasso.with(holder.itemView.getContext())
+                .load("https://image.tmdb.org/t/p/original/" + movieDetails.getPosterPath())
+                .fit()
+                .centerInside()
                 .into(holder.poster_path);
 
         holder.back_poster.setOnClickListener(v -> {
@@ -146,7 +152,7 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
 
         final DatabaseHelper dbHelper = new DatabaseHelper(holder.itemView.getContext());
         holder.addWatchlist.setOnClickListener(v -> {
-            dbHelper.addWatchlist(new WatchlistModel(movieDetails.getId(), movieDetails.getTitle(), "https://image.tmdb.org/t/p/w500/" + movieDetails.getPosterPath(),"movie", movieDetails.getVoteAverage(), Information.getDate()));
+            dbHelper.addWatchlist(new WatchlistModel(movieDetails.getId(), movieDetails.getTitle(), "https://image.tmdb.org/t/p/original/" + movieDetails.getPosterPath(),"movie", movieDetails.getVoteAverage(), Information.getDate()));
             Toast.makeText(holder.itemView.getContext(), "Movie added to watchlist", Toast.LENGTH_SHORT).show();
         });
     }
@@ -156,7 +162,7 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
         return 1;
     }
 
-    public class InfoMovieViewHolder extends RecyclerView.ViewHolder {
+    class InfoMovieViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         YouTubeThumbnailView youTubeThumbnailView;
         FloatingActionButton addWatchlist;
@@ -169,7 +175,7 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
         TextView description;
         TextView readMore;
 
-        public InfoMovieViewHolder(View itemView) {
+        InfoMovieViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.display_title);
             youTubeThumbnailView = itemView.findViewById(R.id.youtubePreview);

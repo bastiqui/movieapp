@@ -1,7 +1,6 @@
 package com.example.bastiqui.moviesapp.adapters;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -13,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.WatchList;
+import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
-import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.Watc
             });
             builder.show();
 
-            return false;
+            return true;
         });
 
         return watchlistViewHolder;
@@ -71,7 +70,9 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.Watc
     public void onBindViewHolder(@NonNull WatchlistAdapter.WatchlistViewHolder holder, int position) {
         WatchlistModel watchList = watchLists.get(position);
 
-        GlideApp.with(holder.itemView).load(watchList.getImage()).into(holder.imageView);
+        Picasso.with(holder.itemView.getContext()).load(watchList.getImage())
+                .fit()
+                .into(holder.imageView);
 
         holder.name.setText(watchList.getName());
         holder.type.setText(watchList.getType());

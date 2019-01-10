@@ -21,7 +21,9 @@ import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.TV;
+import com.squareup.picasso.Picasso;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.TVViewHold
 
             dbHelper.addRecent(new RecentHistory(tvList.get(tvViewHolder.getAdapterPosition()).id,
                     tvList.get(tvViewHolder.getAdapterPosition()).name,
-                    "https://image.tmdb.org/t/p/w500/" + tvList.get(tvViewHolder.getAdapterPosition()).getPoster_path(),
+                    "https://image.tmdb.org/t/p/original/" + tvList.get(tvViewHolder.getAdapterPosition()).getPoster_path(),
                     "tv",
                     tvList.get(tvViewHolder.getAdapterPosition()).vote_average,
                     Information.getDate()));
@@ -58,9 +60,12 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.TVViewHold
     public void onBindViewHolder(@NonNull TVViewHolder holder, int position) {
         TV tv = tvList.get(position);
 
-        holder.title.setText(new StringBuilder().append("#").append(position + 1).append(" ").append(tv.name).toString());
+        holder.title.setText(MessageFormat.format("#{0} {1}", position + 1, tv.name));
 
-        GlideApp.with(holder.itemView.getContext()).load("https://image.tmdb.org/t/p/w500/" + tv.poster_path).into(holder.poster);
+        Picasso.with(holder.itemView.getContext())
+                .load("https://image.tmdb.org/t/p/original/" + tv.poster_path)
+                .fit()
+                .into(holder.poster);
     }
 
     @Override

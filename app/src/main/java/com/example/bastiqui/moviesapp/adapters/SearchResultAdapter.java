@@ -21,6 +21,7 @@ import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.Search;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +45,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             if (searchList.get(searchViewHolder.getAdapterPosition()).media_type.equals("movie")) {
                 dbHelper.addRecent(new RecentHistory(searchList.get(searchViewHolder.getAdapterPosition()).id,
                         searchList.get(searchViewHolder.getAdapterPosition()).title,
-                        "https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/original/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
                         searchList.get(searchViewHolder.getAdapterPosition()).media_type,
                         searchList.get(searchViewHolder.getAdapterPosition()).getVote_average(),
                         Information.getDate()));
             } else {
                 dbHelper.addRecent(new RecentHistory(searchList.get(searchViewHolder.getAdapterPosition()).id,
                         searchList.get(searchViewHolder.getAdapterPosition()).name,
-                        "https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/original/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
                         searchList.get(searchViewHolder.getAdapterPosition()).media_type,
                         searchList.get(searchViewHolder.getAdapterPosition()).getVote_average(),
                         Information.getDate()));
@@ -70,7 +71,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         if (search.media_type.equals("movie")) holder.title.setText(search.title);
         else holder.title.setText(search.name);
 
-        GlideApp.with(holder.itemView.getContext()).load("https://image.tmdb.org/t/p/w500/" + search.poster_path).into(holder.poster);
+        Picasso.with(holder.itemView.getContext())
+                .load("https://image.tmdb.org/t/p/original/" + search.poster_path)
+                .fit()
+                .into(holder.poster);
     }
 
     @Override

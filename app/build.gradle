@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
     implementation 'uk.co.samuelwall:material-tap-target-prompt:2.14.0'
     implementation 'me.grantland:autofittextview:0.2.1'
+    implementation 'com.squareup.picasso:picasso:2.5.1'
 }
