@@ -1,5 +1,7 @@
 package com.example.bastiqui.moviesapp.database;
 
+import android.support.annotation.NonNull;
+
 public class WatchlistModel {
     private String id;
     private String name;
@@ -7,8 +9,6 @@ public class WatchlistModel {
     private String type;
     private String vote_average;
     private String date;
-
-    public WatchlistModel() {}
 
     public WatchlistModel(String id, String name, String image, String type, String vote_average, String date) {
         this.id = id;
@@ -67,6 +67,7 @@ public class WatchlistModel {
         this.date = date;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "WatchlistModel{" +

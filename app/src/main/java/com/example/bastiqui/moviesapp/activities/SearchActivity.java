@@ -1,11 +1,11 @@
 package com.example.bastiqui.moviesapp.activities;
 
-        import android.content.Intent;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.widget.SearchView;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.SearchView;
 
-        import com.example.bastiqui.moviesapp.R;
+import com.example.bastiqui.moviesapp.R;
 
 public class SearchActivity extends AppCompatActivity {
 

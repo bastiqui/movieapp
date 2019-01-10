@@ -15,10 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.Information;
 import com.example.bastiqui.moviesapp.R;
-import com.example.bastiqui.moviesapp.activities.showInfo.showDescription;
 import com.example.bastiqui.moviesapp.activities.showInfo.showImage;
 import com.example.bastiqui.moviesapp.activities.showInfo.showSeasons;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
@@ -160,7 +158,7 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
         return 1;
     }
 
-    public class InfoTVViewHolder extends RecyclerView.ViewHolder {
+    class InfoTVViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView poster_path;
         ImageView back_poster;
@@ -173,7 +171,7 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
         TextView readMore;
         TextView seasons;
 
-        public InfoTVViewHolder(View itemView) {
+        InfoTVViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.display_title);
             poster_path = itemView.findViewById(R.id.infoPoster);

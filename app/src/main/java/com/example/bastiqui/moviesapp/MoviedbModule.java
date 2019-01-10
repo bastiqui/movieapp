@@ -14,7 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MoviedbModule {
-    static MoviedbAPI moviedbAPI;
+    private static MoviedbAPI moviedbAPI;
 
     public static MoviedbAPI getAPI(){
         if(moviedbAPI == null){
@@ -59,6 +59,7 @@ class ApiKeyInterceptor implements Interceptor {
 }
 
 class LoggingInterceptor implements Interceptor {
+    @NonNull
     @Override public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
 

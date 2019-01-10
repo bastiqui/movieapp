@@ -7,6 +7,8 @@ import com.example.bastiqui.moviesapp.R;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import java.util.Objects;
+
 public class YoutubePlayer extends YouTubeFailureRecoveryActivity{
 
     private YouTubePlayerView playerView;
@@ -22,9 +24,9 @@ public class YoutubePlayer extends YouTubeFailureRecoveryActivity{
         Intent getIntent = getIntent();
 
         // The unique video id of the youtube video (can be obtained from video url)
-        youtube_url = getIntent.getExtras().getString("query");
+        youtube_url = Objects.requireNonNull(getIntent.getExtras()).getString("query");
 
-        playerView = (YouTubePlayerView) findViewById(R.id.player);
+        playerView = findViewById(R.id.player);
         playerView.initialize(DEVELOPER_KEY, this);
     }
 

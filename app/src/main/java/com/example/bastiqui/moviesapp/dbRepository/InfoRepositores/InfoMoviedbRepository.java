@@ -15,7 +15,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class InfoMoviedbRepository {
-    MoviedbAPI moviedbAPI;
+    private MoviedbAPI moviedbAPI;
 
     public InfoMoviedbRepository(){
         moviedbAPI = MoviedbModule.getAPI();
@@ -32,7 +32,7 @@ public class InfoMoviedbRepository {
             }
 
             @Override
-            public void onFailure(Call<MovieDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieDetails> call, @NonNull Throwable t) {
                 if (t instanceof IOException) {
                     System.out.println("ABCD -> Timeout -> " + String.valueOf(t.getCause()));
                 }

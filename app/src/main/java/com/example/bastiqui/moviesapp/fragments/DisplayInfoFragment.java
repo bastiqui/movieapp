@@ -40,12 +40,14 @@ public class DisplayInfoFragment extends Fragment {
 
         InfoViewModel mInfoViewModel = ViewModelProviders.of(this).get(InfoViewModel.class);
 
+        assert type != null;
         if (type.equals("movie")) {
             mInfoMovieAdapter = new InfoMovieAdapter();
             mRecyclerView.setAdapter(mInfoMovieAdapter);
 
             mInfoViewModel.getMovieDetails(itemID).observe(this, movieDetails -> {
                 mInfoMovieAdapter.movieDetails = movieDetails;
+                assert movieDetails != null;
                 mInfoMovieAdapter.genres = movieDetails.getGenres();
                 mInfoMovieAdapter.notifyDataSetChanged();
             });
@@ -55,6 +57,7 @@ public class DisplayInfoFragment extends Fragment {
 
             mInfoViewModel.getTVDetails(itemID).observe(this, tvDetails -> {
                 minfoTVAdapter.tvDetails = tvDetails;
+                assert tvDetails != null;
                 minfoTVAdapter.genres = tvDetails.getGenres();
                 minfoTVAdapter.notifyDataSetChanged();
             });

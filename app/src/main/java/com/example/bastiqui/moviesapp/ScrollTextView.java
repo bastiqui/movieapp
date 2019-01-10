@@ -21,13 +21,13 @@ public class ScrollTextView extends android.support.v7.widget.AppCompatTextView 
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         if (focused)
-            super.onFocusChanged(focused, direction, previouslyFocusedRect);
+            super.onFocusChanged(true, direction, previouslyFocusedRect);
     }
 
     @Override
     public void onWindowFocusChanged(boolean focused) {
         if (focused)
-            super.onWindowFocusChanged(focused);
+            super.onWindowFocusChanged(true);
     }
 
     @Override

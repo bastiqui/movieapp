@@ -1,5 +1,6 @@
 package com.example.bastiqui.moviesapp.database;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.ContentValues;
@@ -65,19 +66,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    public boolean queryCheckWatchlist (WatchlistModel watchListModel) {
+    private boolean queryCheckWatchlist(WatchlistModel watchListModel) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(DatabaseOptions.WATCHLIST_TABLE,
+        @SuppressLint("Recycle") Cursor cursor = db.query(DatabaseOptions.WATCHLIST_TABLE,
                 new String[]{DatabaseOptions.ID},
                 DatabaseOptions.ID + "=?",
                 new String[]{watchListModel.getId()}, null, null, null, "1");
         if (cursor != null)
             cursor.moveToFirst();
-        if (cursor != null && cursor.getCount() > 0) {
-            return true;
-        }
-        return false;
+        return cursor != null && cursor.getCount() > 0;
     }
 
     public void addWatchlist (WatchlistModel watchlistModel) {
@@ -112,19 +110,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public boolean queryCheckRecent(RecentHistory recentHistory) {
+    private boolean queryCheckRecent(RecentHistory recentHistory) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(DatabaseOptions.RECENT_TABLE,
+        @SuppressLint("Recycle") Cursor cursor = db.query(DatabaseOptions.RECENT_TABLE,
                 new String[]{DatabaseOptions.ID},
                 DatabaseOptions.ID + "=?",
                 new String[]{recentHistory.getId()}, null, null, null, "1");
         if (cursor != null)
             cursor.moveToFirst();
-        if (cursor != null && cursor.getCount() > 0) {
-            return true;
-        }
-        return false;
+        return cursor != null && cursor.getCount() > 0;
     }
 
     public LiveData<List<RecentHistory>> getAllRecent() {

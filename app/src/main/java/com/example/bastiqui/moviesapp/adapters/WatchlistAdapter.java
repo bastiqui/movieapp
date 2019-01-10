@@ -84,14 +84,14 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.Watc
         return watchLists.size();
     }
 
-    public class WatchlistViewHolder extends RecyclerView.ViewHolder {
+    class WatchlistViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView name;
         TextView type;
         TextView vote;
         LinearLayout linearLayout;
 
-        public WatchlistViewHolder(View itemView) {
+        WatchlistViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.recent_image);
             name = itemView.findViewById(R.id.recent_name);

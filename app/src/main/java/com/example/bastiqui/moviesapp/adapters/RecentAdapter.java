@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
@@ -57,14 +56,14 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecentView
         return recentHistoryList.size();
     }
 
-    public class RecentViewHolder extends RecyclerView.ViewHolder {
+    class RecentViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView name;
         TextView type;
         TextView vote;
         LinearLayout linearLayout;
 
-        public RecentViewHolder(View itemView) {
+        RecentViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.recent_image);
             name = itemView.findViewById(R.id.recent_name);

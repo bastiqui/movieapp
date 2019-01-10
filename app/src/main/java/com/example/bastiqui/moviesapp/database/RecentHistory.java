@@ -1,5 +1,7 @@
 package com.example.bastiqui.moviesapp.database;
 
+import android.support.annotation.NonNull;
+
 public class RecentHistory {
     private String id;
     private String name;
@@ -7,8 +9,6 @@ public class RecentHistory {
     private String type;
     private String vote_average;
     private String date;
-
-    public RecentHistory() {}
 
     public RecentHistory(String id, String name, String image, String type, String vote_average, String date) {
         this.id = id;
@@ -67,6 +67,7 @@ public class RecentHistory {
         this.date = date;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "RecentHistory{" +
