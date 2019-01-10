@@ -16,6 +16,7 @@ import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.Trending;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.MessageFormat;
@@ -41,7 +42,7 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
 
                 dbHelper.addRecent(new RecentHistory(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
                         trendingList.get(trendingViewHolder.getAdapterPosition()).name,
-                        "https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/original/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
                         "tv",
                         trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
                         Information.getDate()));
@@ -51,7 +52,7 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
 
                 dbHelper.addRecent(new RecentHistory(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
                         trendingList.get(trendingViewHolder.getAdapterPosition()).title,
-                        "https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/original/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
                         "movie",
                         trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
                         Information.getDate()));
@@ -75,8 +76,9 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
         holder.title.setSelected(true);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + trending.poster_path)
+                .load("https://image.tmdb.org/t/p/original/" + trending.poster_path)
                 .fit()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.poster);
     }
 

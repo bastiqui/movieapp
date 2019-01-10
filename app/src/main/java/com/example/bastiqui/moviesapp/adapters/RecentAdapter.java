@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.bastiqui.moviesapp.R;
 import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecentView
         Picasso.with(holder.itemView.getContext())
                 .load(recentHistory.getImage())
                 .fit()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.imageView);
 
         holder.name.setText(recentHistory.getName());

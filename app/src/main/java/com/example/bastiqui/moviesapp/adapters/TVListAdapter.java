@@ -16,6 +16,7 @@ import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.TV;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.MessageFormat;
@@ -40,7 +41,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.TVViewHold
 
             dbHelper.addRecent(new RecentHistory(tvList.get(tvViewHolder.getAdapterPosition()).id,
                     tvList.get(tvViewHolder.getAdapterPosition()).name,
-                    "https://image.tmdb.org/t/p/w500/" + tvList.get(tvViewHolder.getAdapterPosition()).getPoster_path(),
+                    "https://image.tmdb.org/t/p/original/" + tvList.get(tvViewHolder.getAdapterPosition()).getPoster_path(),
                     "tv",
                     tvList.get(tvViewHolder.getAdapterPosition()).vote_average,
                     Information.getDate()));
@@ -59,8 +60,9 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.TVViewHold
         holder.title.setSelected(true);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + tv.poster_path)
+                .load("https://image.tmdb.org/t/p/original/" + tv.poster_path)
                 .fit()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.poster);
     }
 

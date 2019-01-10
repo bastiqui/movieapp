@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.bastiqui.moviesapp.GlideApp;
 import com.example.bastiqui.moviesapp.R;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -22,8 +23,9 @@ public class showImage extends AppCompatActivity {
 
         com.jsibbold.zoomage.ZoomageView imageView = findViewById(R.id.showImage);
 
-        GlideApp.with(this)
+        Picasso.with(this)
                 .load("https://image.tmdb.org/t/p/original/" + uri)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(imageView);
     }
 }

@@ -23,6 +23,7 @@ import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.WatchlistModel;
 import com.example.bastiqui.moviesapp.model.GetDetails.movies.tv.Season;
 import com.example.bastiqui.moviesapp.model.GetDetails.movies.tv.TVDetails;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -126,13 +127,15 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
         holder.rating.display();
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getBackdropPath())
+                .load("https://image.tmdb.org/t/p/original/" + tvDetails.getBackdropPath())
                 .fit()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.back_poster);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getPosterPath())
+                .load("https://image.tmdb.org/t/p/original/" + tvDetails.getPosterPath())
                 .fit()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .centerInside()
                 .into(holder.poster_path);
 
