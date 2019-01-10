@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="262dp"
+    android:layout_height="258dp"
+    android:orientation="vertical"
+    android:id="@+id/item_id">
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="262dp"
+            android:layout_height="240dp"
+            android:contentDescription="@string/posterpath_image" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.example.bastiqui.moviesapp.ScrollingTextView
+                android:id="@+id/itemTitle"
+                android:layout_width="262dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:duplicateParentState="true"
+                android:scrollHorizontally="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textAppearance="?android:attr/textAppearanceSmall" >
+                <requestFocus
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:duplicateParentState="true" />
+            </com.example.bastiqui.moviesapp.ScrollingTextView>
+
+        </RelativeLayout>
+
+</LinearLayout>

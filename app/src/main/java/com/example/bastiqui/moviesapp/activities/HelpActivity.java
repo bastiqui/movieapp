@@ -46,8 +46,8 @@ public class HelpActivity extends AppCompatActivity {
         final FloatingActionButton feedbackButton = findViewById(R.id.feedbackButton);
         feedback.setOnClickListener(v -> {
             if (feedbackText.getVisibility() == View.VISIBLE) {
-                feedbackText.setVisibility(View.INVISIBLE);
-                feedbackButton.setVisibility(View.INVISIBLE);
+                feedbackText.setVisibility(View.GONE);
+                feedbackButton.setVisibility(View.GONE);
             } else {
                 feedbackText.setVisibility(View.VISIBLE);
                 feedbackButton.setVisibility(View.VISIBLE);
@@ -56,8 +56,8 @@ public class HelpActivity extends AppCompatActivity {
 
         feedbackButton.setOnClickListener(v -> {
             Toast.makeText(getApplicationContext(), "Sending feedback... Thanks for it!", Toast.LENGTH_SHORT).show();
-            feedbackText.setVisibility(View.INVISIBLE);
-            feedbackButton.setVisibility(View.INVISIBLE);
+            feedbackText.setVisibility(View.GONE);
+            feedbackButton.setVisibility(View.GONE);
         });
 
         Button email_feedback = findViewById(R.id.email_feedback);

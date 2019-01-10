@@ -17,57 +17,45 @@
         <activity
             android:name=".activities.FragmentsMainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.SearchActivity" />
         <activity
             android:name=".activities.MyZoneActivity"
             android:label="@string/my_zone"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"/>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".activities.HelpActivity"
             android:label="@string/action_help"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AboutActivity"
             android:label="@string/action_about"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SearchResultActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.showInfo.DisplayInfoActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".youtube.YoutubePlayer"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".activities.showInfo.showDescription"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.showInfo.showDescription" />
         <activity android:name=".activities.showInfo.showImage"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activities.showInfo.showSeasons"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".activities.showInfo.showSeasons" />
         <activity android:name=".activities.WatchList"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
