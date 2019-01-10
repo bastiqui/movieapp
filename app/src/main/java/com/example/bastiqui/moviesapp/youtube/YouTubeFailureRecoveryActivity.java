@@ -12,7 +12,7 @@ public abstract class YouTubeFailureRecoveryActivity extends YouTubeBaseActivity
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
 
-    String DEVELOPER_KEY = "AIzaSyCOh9CU1Z6LETz-xtY_iMFhyuzBrdAaL8g";
+    String DEVELOPER_KEY = "";
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider,
