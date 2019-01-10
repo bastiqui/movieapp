@@ -56,6 +56,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         final Movie movie = movieList.get(position);
 
         holder.title.setText(MessageFormat.format("#{0} {1}", position + 1, movie.title));
+        holder.title.setSelected(true);
 
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/original/" + movie.poster_path)

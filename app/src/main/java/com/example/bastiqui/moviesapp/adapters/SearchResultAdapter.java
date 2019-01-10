@@ -65,6 +65,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         if (search.media_type.equals("movie")) holder.title.setText(search.title);
         else holder.title.setText(search.name);
+        holder.title.setSelected(true);
 
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/original/" + search.poster_path)

@@ -10,6 +10,6 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/recycler_view_item" />
+        tools:listitem="@layout/item" />
 
 </LinearLayout>
