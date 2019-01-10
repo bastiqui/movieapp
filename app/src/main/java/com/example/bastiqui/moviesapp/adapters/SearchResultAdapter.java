@@ -16,7 +16,6 @@ import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.Search;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,7 +70,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/original/" + search.poster_path)
                 .fit()
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.poster);
     }
 

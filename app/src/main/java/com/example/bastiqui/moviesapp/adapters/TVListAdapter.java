@@ -16,7 +16,6 @@ import com.example.bastiqui.moviesapp.activities.showInfo.DisplayInfoActivity;
 import com.example.bastiqui.moviesapp.database.DatabaseHelper;
 import com.example.bastiqui.moviesapp.database.RecentHistory;
 import com.example.bastiqui.moviesapp.model.TV;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.MessageFormat;
@@ -62,7 +61,6 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.TVViewHold
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/original/" + tv.poster_path)
                 .fit()
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.poster);
     }
 

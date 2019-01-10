@@ -24,6 +24,7 @@ import com.example.bastiqui.moviesapp.model.GetDetails.movies.movies.MovieDetail
 import com.example.bastiqui.moviesapp.youtube.YoutubePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -128,20 +129,19 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
                 .load(R.drawable.youtube_logo)
                 .fit()
                 .centerInside()
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                 .into(holder.youTubeThumbnailView);
 
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/original/" + movieDetails.getBackdropPath())
                 .fit()
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .memoryPolicy(MemoryPolicy.NO_STORE)
                 .into(holder.back_poster);
 
         Picasso.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/original/" + movieDetails.getPosterPath())
                 .fit()
                 .centerInside()
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .memoryPolicy(MemoryPolicy.NO_STORE)
                 .into(holder.poster_path);
 
         holder.back_poster.setOnClickListener(v -> {

@@ -70,7 +70,8 @@ public class WatchlistAdapter extends RecyclerView.Adapter<WatchlistAdapter.Watc
     public void onBindViewHolder(@NonNull WatchlistAdapter.WatchlistViewHolder holder, int position) {
         WatchlistModel watchList = watchLists.get(position);
 
-        Picasso.with(holder.itemView.getContext()).load(watchList.getImage())
+        Picasso.with(holder.itemView.getContext())
+                .load(watchList.getImage())
                 .fit()
                 .into(holder.imageView);
 
