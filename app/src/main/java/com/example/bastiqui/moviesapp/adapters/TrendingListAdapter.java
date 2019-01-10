@@ -41,7 +41,7 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
 
                 dbHelper.addRecent(new RecentHistory(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
                         trendingList.get(trendingViewHolder.getAdapterPosition()).name,
-                        "https://image.tmdb.org/t/p/original/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
                         "tv",
                         trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
                         Information.getDate()));
@@ -51,7 +51,7 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
 
                 dbHelper.addRecent(new RecentHistory(trendingList.get(trendingViewHolder.getAdapterPosition()).id,
                         trendingList.get(trendingViewHolder.getAdapterPosition()).title,
-                        "https://image.tmdb.org/t/p/original/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/w500/" + trendingList.get(trendingViewHolder.getAdapterPosition()).poster_path,
                         "movie",
                         trendingList.get(trendingViewHolder.getAdapterPosition()).vote_average,
                         Information.getDate()));
@@ -75,7 +75,7 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
         holder.title.setSelected(true);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original/" + trending.poster_path)
+                .load("https://image.tmdb.org/t/p/w500/" + trending.poster_path)
                 .fit()
                 .into(holder.poster);
     }

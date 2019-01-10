@@ -126,12 +126,12 @@ public class InfoTVAdapter extends RecyclerView.Adapter<InfoTVAdapter.InfoTVView
         holder.rating.display();
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original/" + tvDetails.getBackdropPath())
+                .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getBackdropPath())
                 .fit()
                 .into(holder.back_poster);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original/" + tvDetails.getPosterPath())
+                .load("https://image.tmdb.org/t/p/w500/" + tvDetails.getPosterPath())
                 .fit()
                 .centerInside()
                 .into(holder.poster_path);

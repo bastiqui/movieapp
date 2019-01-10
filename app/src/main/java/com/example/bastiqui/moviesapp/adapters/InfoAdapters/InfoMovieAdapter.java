@@ -130,12 +130,12 @@ public class InfoMovieAdapter extends RecyclerView.Adapter<InfoMovieAdapter.Info
                 .into(holder.youTubeThumbnailView);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original/" + movieDetails.getBackdropPath())
+                .load("https://image.tmdb.org/t/p/w500/" + movieDetails.getBackdropPath())
                 .fit()
                 .into(holder.back_poster);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original/" + movieDetails.getPosterPath())
+                .load("https://image.tmdb.org/t/p/w500/" + movieDetails.getPosterPath())
                 .fit()
                 .centerInside()
                 .into(holder.poster_path);

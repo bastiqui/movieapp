@@ -40,14 +40,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             if (searchList.get(searchViewHolder.getAdapterPosition()).media_type.equals("movie")) {
                 dbHelper.addRecent(new RecentHistory(searchList.get(searchViewHolder.getAdapterPosition()).id,
                         searchList.get(searchViewHolder.getAdapterPosition()).title,
-                        "https://image.tmdb.org/t/p/original/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
                         searchList.get(searchViewHolder.getAdapterPosition()).media_type,
                         searchList.get(searchViewHolder.getAdapterPosition()).getVote_average(),
                         Information.getDate()));
             } else {
                 dbHelper.addRecent(new RecentHistory(searchList.get(searchViewHolder.getAdapterPosition()).id,
                         searchList.get(searchViewHolder.getAdapterPosition()).name,
-                        "https://image.tmdb.org/t/p/original/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
+                        "https://image.tmdb.org/t/p/w500/" + searchList.get(searchViewHolder.getAdapterPosition()).poster_path,
                         searchList.get(searchViewHolder.getAdapterPosition()).media_type,
                         searchList.get(searchViewHolder.getAdapterPosition()).getVote_average(),
                         Information.getDate()));
@@ -68,7 +68,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         holder.title.setSelected(true);
 
         Picasso.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/original/" + search.poster_path)
+                .load("https://image.tmdb.org/t/p/w500/" + search.poster_path)
                 .fit()
                 .into(holder.poster);
     }
